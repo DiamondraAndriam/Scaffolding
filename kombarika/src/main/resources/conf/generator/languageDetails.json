@@ -171,7 +171,9 @@
                             "etu1748.framework.annotation.*",
                             "etu1748.framework.*"
                         ],
-                        "entity":[]
+                        "entity":[
+                            "etu1748.framework.annotation.*"
+                        ]
                     },
                     "annotationProperty" : {
                         "table": "",
