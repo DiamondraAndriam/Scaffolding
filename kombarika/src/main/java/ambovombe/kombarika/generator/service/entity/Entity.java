@@ -92,7 +92,7 @@ public class Entity {
                     + this.getLanguageProperties().getFieldSyntax()
                         .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                         .replace("field", ObjectUtility.formatToCamelCase(temp))
-                    + "\n";
+                    + "\n" + "\n";
                 continue;
             }
             res += "\t"
@@ -102,7 +102,7 @@ public class Entity {
                 + this.getLanguageProperties().getFieldSyntax()
                     .replace("Type", typeMapping.getListMapping().get(set.getValue()).getType())
                     .replace("field", ObjectUtility.formatToCamelCase(set.getKey()))
-                + "\n";
+                + "\n" + "\n";
         }
         return res;
     }
@@ -138,13 +138,17 @@ public class Entity {
                 .replace("#close-bracket#", this.getLanguageProperties().getCloseBracket())
                 .replace("#fields#", getEntityField(columns, foreignKeys, primaryKeyColumn))
                 .replace("#constructors#", getConstructor(table))
-                .replace("#methods#", "")
+                .replace("#methods#", "") /* obtenir les method de crud par rapport amle model view */
                 .replace("#encapsulation#", getEncapsulation(columns, foreignKeys));
         return res;
     }
 
     public String getFileName(String table){
         return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + this.getLanguageProperties().getExtension());
+    }
+
+    public String getCrudMethods(){
+        return null;
     }
 
 }

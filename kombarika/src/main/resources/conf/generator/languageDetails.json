@@ -73,18 +73,19 @@
                         "classSyntax": "?Controller : Controller",
                         "returnType": "ActionResult<?>",
                         "returnTypeDelete": "void",
-                        "field": "private readonly ?DbContext _context;\n\tprivate readonly ILogger<?Controller> _logger;",
+                        "field": "private readonly #name#DbContext _context;\n\tprivate readonly ILogger<?Controller> _logger;",
                         "annotationField": "",
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"FromBody",
                         "annotationArgumentParameterLink":"",
-                        "constructor": "\tpublic #name#Controller(#name#DbContext context) { _context = context; }"
+                        "constructor": "\tpublic #name#Controller(?DbContext context) { _context = context; }",
+                        "findAllAsync": "async Task<?>"
                     },
                     "repositoryProperty" : {
                         "name":"DbContext",
                         "classSyntax": "public class ?DbContext : DbContext",
                         "fieldSyntax": "\tpublic DbSet<#Field#> #Field# { get; set; }",
-                        "constructor":"\tpublic #name#DbContext(){}\n\tpublic #name#DbContext(DbContextOptions<#name#DbContext> options): base(options)\n{}"
+                        "constructor":"\tpublic #name#DbContext(){}\n\tpublic #name#DbContext(DbContextOptions<#name#DbContext> options): base(options){}"
                     }
                 }
             }
@@ -122,8 +123,7 @@
                         ],
                         "repository":[
                             "packageName.className",
-                            "org.springframework.data.repository.CrudRepository",
-                            "org.springframework.data.jpa.repository.Query"
+                            "org.springframework.data.repository.CrudRepository"
                         ]
                     },
                     "annotationProperty" : {
@@ -167,7 +167,8 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"PathVariable",
-                        "constructor": ""
+                        "constructor": "",
+                        "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
                         "name":"Repository",
@@ -215,30 +216,31 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
+                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}"
                     },
                     "controllerProperty" : {
-                        "path": "",
-                        "get": "Url(url = \"find-?.do\")\n@Json(method = JsonMethods.GET)",
-                        "post": "Url(url = \"save-?.do\")\n@Json(method = JsonMethods.POST)",
-                        "put": "Url(url = \"update-?.do\")\n@Json(method = JsonMethods.PUT)",
-                        "delete": "Url(url = \"delete-?.do\")\n@Json(method = JsonMethods.DELETE)",
+                        "path": "RequestMapping(path = \"/?\")\n@Cors(allowedOrigin = \"*\")",
+                        "get": "Url(method = HttpMethod.GET)\n@Json",
+                        "post": "Url(method = HttpMethod.POST)\n@Json",
+                        "put": "Url(method = HttpMethod.PUT)\n@Json",
+                        "delete": "Url(method = HttpMethod.DELETE)\n@Json",
                         "classSyntax": "?Model",
                         "name":"Model",
                         "includedTerms":"",
                         "field": "private ? entity = new ?();",
                         "returnType": "Object",
-                        "returnTypeDelete": "void",
+                        "returnTypeDelete": "Object",
                         "pathSyntax":"?",
                         "annotationField": "",
                         "annotationMethodParameter":"",
-                        "annotationArgumentParameterFormData":"Argument",
-                        "annotationArgumentParameterLink":"",
-                        "constructor":""
+                        "annotationArgumentParameterFormData":"RequestBody",
+                        "annotationArgumentParameterLink":"RequestParam",
+                        "constructor":"",
+                        "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
                         "name":"",
@@ -250,7 +252,7 @@
                 },
                 "merana" : {
                     "template" : "Template.code",
-                    "repository": "", 
+                    "repository": "",
                     "listSyntax" : "List<?>",
                     "isOneRepository":"false",
                     "imports" : {
@@ -286,13 +288,13 @@
                         }
                     },
                     "crudMethod" : {
-                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}",
-                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn \"Bad request\";\n}"
+                        "findAll": "try{\n\treturn GenericDao.findAll(null, entity);\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "findById":"try{\n\treturn GenericDao.findById(null, #Id#);\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "delete": "try{\n\tGenericDao.delete(null, #object#);\n\treturn \"deleted successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "update": "try{\n\tGenericDao.update(null, #object#);\n\treturn \"updated successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}",
+                        "save": "try{\n\tGenericDao.save(null, #object#);\n\treturn \"saved successfully\";\n}catch(Exception e){\n\treturn e.getMessage();\n}"
                     },
-                    
+
                     "controllerProperty" : {
                         "path": "RequestUrl(\"/?\")",
                         "get": "Url(method = GET)",
@@ -310,7 +312,8 @@
                         "annotationMethodParameter":"",
                         "annotationArgumentParameterFormData":"RequestBody",
                         "annotationArgumentParameterLink":"",
-                        "constructor":""
+                        "constructor":"",
+                        "findAllAsync": "?"
                     },
                     "repositoryProperty" : {
                         "name":"",
