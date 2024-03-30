@@ -3,6 +3,7 @@ package ambovombe.kombarika.generator.service.controller;
 import ambovombe.kombarika.database.DbConnection;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ambovombe.kombarika.configuration.mapping.*;
@@ -38,17 +39,17 @@ public class Controller{
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
         body += Misc.tabulate(this.getCrudMethod().getSave()
-            .replace("?", ObjectUtility.formatToCamelCase(table))
-            .replace("#object#", ObjectUtility.formatToCamelCase(table))
-            .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));      
+                .replace("?", ObjectUtility.formatToCamelCase(table))
+                .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "save")
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
-            this.getControllerProperty().getPost()
-            .replace("?", ObjectUtility.formatToCamelCase(table))
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                this.getControllerProperty().getPost()
+                        .replace("?", ObjectUtility.formatToCamelCase(table))
         ) + "\n" + function);
     }
 
@@ -59,36 +60,36 @@ public class Controller{
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
         body += Misc.tabulate(this.getCrudMethod().getUpdate()
-            .replace("#object#", ObjectUtility.formatToCamelCase(table))
-            .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
+                .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "update")
                 .replace("#type#", this.getControllerProperty().getReturnType().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
                 .replace("#arg#", args)
                 .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
-            this.getControllerProperty().getPut()
-            .replace("?", ObjectUtility.formatToCamelCase(table))
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                this.getControllerProperty().getPut()
+                        .replace("?", ObjectUtility.formatToCamelCase(table))
         ) + "\n" + function);
     }
 
     public String delete(String table) throws Exception{
-        String body = "";   
+        String body = "";
         String args = "";
         args += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationArgumentParameterFormData()) + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
                 + ObjectUtility.formatToCamelCase(table);
         body += Misc.tabulate(this.getCrudMethod().getDelete()
-        .replace("#object#", ObjectUtility.formatToCamelCase(table))
-        .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
+                .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
         String function =  this.getLanguageProperties().getMethodSyntax()
-        .replace("#name#", "delete")
-        .replace("#type#", this.getControllerProperty().getReturnTypeDelete().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
-        .replace("#arg#", args)
-        .replace("#body#", body);
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
-        this.getControllerProperty().getDelete()
-            .replace("?", ObjectUtility.formatToCamelCase(table))
+                .replace("#name#", "delete")
+                .replace("#type#", this.getControllerProperty().getReturnTypeDelete().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))
+                .replace("#arg#", args)
+                .replace("#body#", body);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                this.getControllerProperty().getDelete()
+                        .replace("?", ObjectUtility.formatToCamelCase(table))
         ) + "\n" + function);
     }
 
@@ -111,24 +112,46 @@ public class Controller{
     public String findAll(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys){
         String body = "";
         body += Misc.tabulate(this.getCrudMethod().getFindAll()
-            .replace("#object#", ObjectUtility.formatToCamelCase(table))
-            .replace("#between#", getIncludedTerms(columns, foreignKeys))
-            .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
+                .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                .replace("#between#", getIncludedTerms(columns, foreignKeys))
+                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
 
         String function =  this.getLanguageProperties().getMethodSyntax()
                 .replace("#name#", "findAll")
-                .replace("#type#", this.getControllerProperty().getFindAllAsync()
-                    .replace("?", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))))))
+                .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
                 .replace("#arg#", "")
                 .replace("#body#", body);
 
-        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?", 
-            this.getControllerProperty().getGet()
-                .replace("?", ObjectUtility.formatToCamelCase(table))
-            ) + "\n" + function);
+        return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                this.getControllerProperty().getGet()
+                        .replace("?", ObjectUtility.formatToCamelCase(table))
+        ) + "\n" + function);
     }
 
-    public String findById(String table) throws Exception{
+    public String findById(String table, HashMap<String, String> columns, HashMap<String, String> foreignKeys) throws Exception{
+        if(!this.getCrudMethod().getFindById().equals("")) {
+            String body = "";
+            String args = "";
+            args += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationArgumentParameterFormData()) + " "
+                    + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)) + " "
+                    + ObjectUtility.formatToCamelCase(table);
+
+            body += Misc.tabulate(this.getCrudMethod().getFindById()
+                    .replace("#object#", ObjectUtility.formatToCamelCase(table))
+                    .replace("#between#", getIncludedTerms(columns, foreignKeys))
+                    .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table))));
+
+            String function =  this.getLanguageProperties().getMethodSyntax()
+                    .replace("#name#", "findById")
+                    .replace("#type#", this.getControllerProperty().getReturnType().replace("?", this.getFrameworkProperties().getListSyntax().replace("?",ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))))
+                    .replace("#arg#", args)
+                    .replace("#body#", body);
+
+            return Misc.tabulate(this.getLanguageProperties().getAnnotationSyntax().replace("?",
+                    this.getControllerProperty().getGet()
+                            .replace("?", ObjectUtility.formatToCamelCase(table))
+            ) + "\n" + function);
+        }
         String res = "";
         return res;
     }
@@ -138,6 +161,7 @@ public class Controller{
         HashMap<String, String> foreignKeys = DbService.getForeignKeys(this.getDbConnection(), table);
         String save = save(table);
         String findAll = findAll(table, columns, foreignKeys);
+        String findById = findById(table, columns, foreignKeys);
         String update = update(table);
         String delete = delete(table);
         stringBuilder.append(save);
@@ -147,44 +171,42 @@ public class Controller{
         stringBuilder.append(delete);
         stringBuilder.append("\n");
         stringBuilder.append(findAll);
+        /* stringBuilder.append("\n");
+        stringBuilder.append(findById);*/
         return stringBuilder.toString();
     }
 
-    public String getControllerField(String table, String repository){
+    public String getControllerField(String table){
         String res = "";
         if(!this.getControllerProperty().getField().equals("") && !this.getControllerProperty().getAnnotationField().equals("")){
             res += "\t"
                     + this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getControllerProperty().getAnnotationField()) + "\n"
-                    + "\t" 
-                    + this.getControllerProperty().getField()
-                        .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
-                        .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)))
-                    + "\n";
+                    + "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#object#", table) + "\n";
         }else if (!this.getControllerProperty().getField().equals("")){
-            res += "\t" + this.getControllerProperty().getField()
-                    .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
-                    .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)))
-                + "\n";
+            res += "\t" + this.getControllerProperty().getField().replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("#object#", table) + "\n";
         }
         return res;
     }
-    
+
 
     public String getControllerClass(String table, String framework){
         String res = "";
         if(!this.getAnnotationProperty().getController().equals("")){
             res += this.getLanguageProperties().getAnnotationSyntax()
-                .replace("?", this.getAnnotationProperty().getController()) + "\n";
+                    .replace("?", this.getAnnotationProperty().getController()) + "\n";
         }
         if(!this.getControllerProperty().getPath().equals("")){
             res += this.getLanguageProperties().getAnnotationSyntax()
-                .replace("?", this.getControllerProperty().getPath().replace("?", ObjectUtility.formatToCamelCase(table)));
+                    .replace("?", this.getControllerProperty().getPath().replace("?", ObjectUtility.formatToCamelCase(table)));
         }
+        System.out.println(this.getLanguageProperties().getFrameworks().get(framework).getControllerProperty().getClassSyntax());
         res = res.replace("?", ObjectUtility.formatToCamelCase(table)) + "\n"
-            + this.getLanguageProperties().getClassSyntax() + " "
-            + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(
+                + this.getLanguageProperties().getClassSyntax() + " "
+                + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(
                 this.getLanguageProperties().getFrameworks().get(framework).getControllerProperty().getClassSyntax()).replace("?", ObjectUtility.formatToCamelCase(table))
-            );
+        );
         return res;
     }
 
@@ -193,34 +215,36 @@ public class Controller{
         String imp = this.getLanguageProperties().getImportSyntax();
         for(String item : this.getImports().getController()){
             item = item
-            .replace("packageName", repository)
-            .replace("className", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
-            .replace("entity", entity);
+                    .replace("packageName", repository)
+                    .replace("className", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
+                    .replace("entity", entity);
             res += imp+ " " + item + "" + this.getLanguageProperties().getEndOfInstruction() + "\n";
         }
         return res;
     }
 
-    public String getConstructor(String table, String repository) throws Exception{
+    public String getConstructor(String table) throws Exception{
         String res = "";
         if(!this.getControllerProperty().getConstructor().equals("")){
             res = this.getControllerProperty().getConstructor()
-                .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)))
-                .replace("?", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(repository)));
+                    .replace("#name#", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)));
         }
         return res;
     }
-    
-    public String generateController(String template, String table, String packageName, String context, String repository, String entity, String framework) throws Exception {
+
+    public String generateController(String template, String table, String packageName, String repository, String entity, String framework) throws Exception {
+        List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
+        String getterId = table + ".get"+ ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(primaryKeyColumn.get(0))+"()");
         String res = template.replace("#package#", GeneratorService.getPackage(this.getLanguageProperties(), packageName))
                 .replace("#imports#", getControllerImport(repository, entity, table))
                 .replace("#class#", getControllerClass(table, framework))
                 .replace("#open-bracket#", languageProperties.getOpenBracket())
                 .replace("#close-bracket#", languageProperties.getCloseBracket())
-                .replace("#fields#", getControllerField(table, context))
-                .replace("#constructors#", getConstructor(table, context))
+                .replace("#fields#", getControllerField(table))
+                .replace("#constructors#", getConstructor(table))
                 .replace("#methods#", getCrudMethods(table))
-                .replace("#encapsulation#", "");
+                .replace("#encapsulation#", "")
+                .replace("#Id#",getterId);
         return res;
     }
 }
