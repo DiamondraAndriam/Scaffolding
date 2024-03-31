@@ -322,6 +322,74 @@
                         "constructor":""
 
                     }
+                },
+                "java-framework" : {
+                    "template" : "Template.code",
+                    "repository": "",
+                    "listSyntax" : "List<?>",
+                    "isOneRepository":"false",
+                    "imports" : {
+                        "controller":[
+                            "entity.className",
+                            "etu1748.framework.annotation.*",
+                            "etu1748.framework.*",
+                            "java.util.List"
+                        ],
+                        "entity":[
+                            "etu1748.framework.annotation.*"
+                        ],
+                        "repository":[
+                        ]
+                    },
+                    "annotationProperty" : {
+                        "table": "Table(\"?\")",
+                        "autoIncrement":"",
+                        "column": "Column(\"?\")",
+                        "entity": "",
+                        "controller": "MVCController",
+                        "constraints": {
+                            "primaryKey": "Id",
+                            "foreignKey": {
+                                "annotation":"ForeignKey(\"?\")",
+                                "manyToOne":"ManyToOne",
+                                "manyToMany":"ManyToMany",
+                                "oneToMany":"OneToMany",
+                                "oneToOne":"OneToOne"
+                            }
+                        }
+                    },
+                    "crudMethod" : {
+                        "findAll": "try {\nList<Object> data = GenericDAO.findAll(#object#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "findById": "try {\nList<Object> data = GenericDAO.findById(#object#, #Id#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "delete": "try {\nList<Object> data = GenericDAO.delete(#object#, #Id#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "update": "try {\nList<Object> data = GenericDAO.update(#object#, #Id#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}",
+                        "save": "try {\nList<Object> data = GenericDAO.insert(#object#);\nreturn new ResponseAPI(data, null);\n} catch (Exception e) {\nreturn new ResponseAPI(null, e.getMessage());\n}"
+                    },
+                    "controllerProperty" : {
+                        "path": "",
+                        "get": "Urls(\"?/find.do\")\n@JSON(\"GET\")",
+                        "post": "Urls(\"?/new.do\")\n@JSON(\"POST\")",
+                        "put": "Urls(\"?/update.do\")\n@JSON(\"PUT\")",
+                        "delete": "Urls(\"?/delete.do\")\n@JSON(\"DELETE\")",
+                        "field": "private ? #object# = new ?();",
+                        "classSyntax": "?Controller",
+                        "name":"Controller",
+                        "includedTerms":"",
+                        "returnType": "ResponseAPI",
+                        "returnTypeDelete": "ResponseAPI",
+                        "pathSyntax":"?",
+                        "annotationField": "",
+                        "annotationMethodParameter":"",
+                        "annotationArgumentParameterFormData":"Param",
+                        "annotationArgumentParameterLink":"",
+                        "constructor": ""
+                    },
+                    "repositoryProperty" : {
+                        "name":"",
+                        "classSyntax": "",
+                        "fieldSyntax":"",
+                        "constructor":""
+                    }
                 }
             }
         }
