@@ -21,8 +21,9 @@ public class Entity {
         String res = "";
         if(!this.getAnnotationProperty().getEntity().equals(""))
             res += this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getEntity())  + "\n";
-        res +=  this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n"
-                + this.getLanguageProperties().getClassSyntax() + " "
+        if(!this.getAnnotationProperty().getTable().equals(""))
+        res +=  this.getLanguageProperties().getAnnotationSyntax().replace("?", this.getAnnotationProperty().getTable()).replace("?", table) + "\n";
+        res  += this.getLanguageProperties().getClassSyntax() + " "
                 + ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table));
         return res;
     }
@@ -92,7 +93,7 @@ public class Entity {
                     + this.getLanguageProperties().getFieldSyntax()
                         .replace("Type", ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(temp)))
                         .replace("field", ObjectUtility.formatToCamelCase(temp))
-                    + "\n" + "\n";
+                    + "\n";
                 continue;
             }
             res += "\t"
@@ -102,7 +103,7 @@ public class Entity {
                 + this.getLanguageProperties().getFieldSyntax()
                     .replace("Type", typeMapping.getListMapping().get(set.getValue()).getType())
                     .replace("field", ObjectUtility.formatToCamelCase(set.getKey()))
-                + "\n" + "\n";
+                + "\n";
         }
         return res;
     }
@@ -138,17 +139,13 @@ public class Entity {
                 .replace("#close-bracket#", this.getLanguageProperties().getCloseBracket())
                 .replace("#fields#", getEntityField(columns, foreignKeys, primaryKeyColumn))
                 .replace("#constructors#", getConstructor(table))
-                .replace("#methods#", "") /* obtenir les method de crud par rapport amle model view */
+                .replace("#methods#", "")
                 .replace("#encapsulation#", getEncapsulation(columns, foreignKeys));
         return res;
     }
 
     public String getFileName(String table){
         return ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(table)).concat("." + this.getLanguageProperties().getExtension());
-    }
-
-    public String getCrudMethods(){
-        return null;
     }
 
 }

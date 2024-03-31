@@ -231,7 +231,6 @@ public class Controller{
         }
         return res;
     }
-
     public String generateController(String template, String table, String packageName, String repository, String entity, String framework) throws Exception {
         List<String> primaryKeyColumn = DbService.getPrimaryKey(dbConnection, table);
         String getterId = table + ".get"+ ObjectUtility.capitalize(ObjectUtility.formatToCamelCase(primaryKeyColumn.get(0))+"()");
